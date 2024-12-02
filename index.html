@@ -546,7 +546,16 @@
             transition: opacity 0.3s;
         }
 
-        .sidebar-section a:hover {
+        .sidebar-image {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center image within the section */
+            transition: transform 0.3s, opacity 0.3s; /* Add hover effects */
+        }
+
+        .sidebar-section:hover .sidebar-image {
+            transform: scale(1.1); /* Slight zoom on hover */
             opacity: 0.8;
         }
 
@@ -749,11 +758,18 @@
       </section>
 
       <div class="sidebar">
-        <div class="sidebar-section" onclick="showMarkers(1)">ALL</div>
-        <div class="sidebar-section" onclick="showMarkers(2)">DISTANT</div>
-        <div class="sidebar-section" onclick="showMarkers(3)">CLOSE PROXIMITY</div>
-        <div class="sidebar-section" onclick="showMarkers(4)">DIRECT</div>
-       
+        <div class="sidebar-section" onclick="showMarkers(1)">
+            <img src="ICON.png" alt="All" class="sidebar-image">
+        </div>
+        <div class="sidebar-section" onclick="showMarkers(2)">
+            <img src="ICON2.png" alt="Distant" class="sidebar-image">
+        </div>
+        <div class="sidebar-section" onclick="showMarkers(3)">
+            <img src="ICON3.png" alt="Close Proximity" class="sidebar-image">
+        </div>
+        <div class="sidebar-section" onclick="showMarkers(4)">
+            <img src="ICON4.png" alt="Direct" class="sidebar-image">
+        </div>
     </div>
 
 
@@ -924,7 +940,7 @@
         };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+ const app = firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
 
   // Add a comment to Firebase
