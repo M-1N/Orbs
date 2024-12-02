@@ -666,7 +666,74 @@
 
         .modal .close:hover {
             background: rgba(255, 0, 0, 0.8); 
-      
+        }
+
+        #comment-section {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        #comment-section h3 {
+            margin-bottom: 10px;
+        }
+
+        #comments-container {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 5px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        #comment-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #111;
+            color: #fff;
+        }
+
+        #comment-input::placeholder {
+            color: #888;
+        }
+
+        #comment-section button {
+            padding: 5px 10px;
+            background-color: #e0287d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        #comment-section button:hover {
+            background-color: #1bc7fb;
+        }
+
+        #name-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #111;
+            color: #fff;
+        }
+
+        #name-input::placeholder {
+            color: #888;
+        }
+
+        
 
     </style>
 </head>
@@ -702,34 +769,30 @@
     </div>
 
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="panorama"></div>
-            <!-- Giscus Comment Section -->
-            <div id="comment-section">
-                <h3>Comments</h3>
-                <div id="comments-container">
-                    <!-- Giscus Embed -->
-                    <script src="https://giscus.app/client.js"
-                        data-repo="M-1N/Orbs"
-                        data-repo-id="R_kgDONTjVlQ"
-                        data-category="General"
-                        data-category-id="DIC_kwDONTjVlc4Ck0To"
-                        data-mapping="pathname"
-                        data-strict="0"
-                        data-reactions-enabled="1"
-                        data-emit-metadata="0"
-                        data-input-position="bottom"
-                        data-theme="preferred_color_scheme"
-                        data-lang="en"
-                        crossorigin="anonymous"
-                        async>
-                    </script>
-                </div>
-            </div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="panorama"></div>
+        <!-- Giscus Comment Section -->
+        <div id="giscus-comments">
+            <script src="https://giscus.app/client.js"
+                data-repo="M-1N/Orbs"
+                data-repo-id="R_kgDONTjVlQ"
+                data-category="General"
+                data-category-id="DIC_kwDONTjVlc4Ck0To"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="en"
+                crossorigin="anonymous"
+                async>
+            </script>
         </div>
     </div>
+</div>
     
     
 
@@ -840,23 +903,54 @@
         groupedMarkers[section].forEach(marker => marker.setMap(map));
     }
 
-    }
-    function openModal(panorama) {
-        const modal = document.getElementById('viewerModal');
-        modal.style.display = 'flex';
-
-        pannellum.viewer('panorama', {
-            type: 'equirectangular',
-            panorama: panorama
-        });
-    }
-
-    function closeModal() {
-        const modal = document.getElementById('viewerModal');
-        modal.style.display = 'none';
-    }
 
     window.onload = initMap;
+
+    function openModal(panoramaFile, title) {
+    const modal = document.getElementById('modal');
+    const panoramaContainer = document.getElementById('panorama');
+    const giscusContainer = document.getElementById('giscus-comments');
+
+    // Clear previous panorama and Giscus content
+    panoramaContainer.innerHTML = '';
+    giscusContainer.innerHTML = '';
+
+    // Initialize Pannellum Panorama Viewer
+    pannellum.viewer('panorama', {
+        type: 'equirectangular',
+        panorama: panoramaFile,
+        autoLoad: true,
+    });
+
+    // Dynamically update the Giscus script for comments
+    const giscusScript = document.createElement('script');
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute('data-repo', 'M-1N/Orbs');
+    giscusScript.setAttribute('data-repo-id', 'R_kgDONTjVlQ');
+    giscusScript.setAttribute('data-category', 'General');
+    giscusScript.setAttribute('data-category-id', 'DIC_kwDONTjVlc4Ck0To');
+    giscusScript.setAttribute('data-mapping', 'specific'); // Set to 'specific' for unique mapping
+    giscusScript.setAttribute('data-term', title); // Use marker title as unique identifier
+    giscusScript.setAttribute('data-strict', '0');
+    giscusScript.setAttribute('data-reactions-enabled', '1');
+    giscusScript.setAttribute('data-emit-metadata', '0');
+    giscusScript.setAttribute('data-input-position', 'bottom');
+    giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
+    giscusScript.setAttribute('data-lang', 'en');
+    giscusScript.setAttribute('crossorigin', 'anonymous');
+    giscusScript.async = true;
+
+    giscusContainer.appendChild(giscusScript);
+
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+}
+
+    
 
 
 
@@ -867,3 +961,4 @@
     </script>
 </body>
 </html>
+
