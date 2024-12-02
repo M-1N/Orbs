@@ -769,27 +769,16 @@
     </div>
 
 
-<div id="modal" class="modal">
+    <div class="modal" id="viewerModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div id="panorama"></div>
-        <!-- Giscus Comment Section -->
-        <div id="giscus-comments">
-            <script src="https://giscus.app/client.js"
-                data-repo="M-1N/Orbs"
-                data-repo-id="R_kgDONTjVlQ"
-                data-category="General"
-                data-category-id="DIC_kwDONTjVlc4Ck0To"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="preferred_color_scheme"
-                data-lang="en"
-                crossorigin="anonymous"
-                async>
-            </script>
+        <div id="panorama" style="width: 100%; height: 70%;"></div>
+        <div id="comment-section">
+            <h3>Comments</h3>
+            <div id="comments-container"></div>
+            <input id="name-input" type="text" placeholder="Your Name" />
+            <input id="comment-input" type="text" placeholder="Add a comment..." />
+            <button onclick="addComment()">Post Comment</button>
         </div>
     </div>
 </div>
@@ -903,54 +892,23 @@
         groupedMarkers[section].forEach(marker => marker.setMap(map));
     }
 
+    }
+    function openModal(panorama) {
+        const modal = document.getElementById('viewerModal');
+        modal.style.display = 'flex';
+
+        pannellum.viewer('panorama', {
+            type: 'equirectangular',
+            panorama: panorama
+        });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('viewerModal');
+        modal.style.display = 'none';
+    }
 
     window.onload = initMap;
-
-    function openModal(panoramaFile, title) {
-    const modal = document.getElementById('modal');
-    const panoramaContainer = document.getElementById('panorama');
-    const giscusContainer = document.getElementById('giscus-comments');
-
-    // Clear previous panorama and Giscus content
-    panoramaContainer.innerHTML = '';
-    giscusContainer.innerHTML = '';
-
-    // Initialize Pannellum Panorama Viewer
-    pannellum.viewer('panorama', {
-        type: 'equirectangular',
-        panorama: panoramaFile,
-        autoLoad: true,
-    });
-
-    // Dynamically update the Giscus script for comments
-    const giscusScript = document.createElement('script');
-    giscusScript.src = "https://giscus.app/client.js";
-    giscusScript.setAttribute('data-repo', 'M-1N/Orbs');
-    giscusScript.setAttribute('data-repo-id', 'R_kgDONTjVlQ');
-    giscusScript.setAttribute('data-category', 'General');
-    giscusScript.setAttribute('data-category-id', 'DIC_kwDONTjVlc4Ck0To');
-    giscusScript.setAttribute('data-mapping', 'specific'); // Set to 'specific' for unique mapping
-    giscusScript.setAttribute('data-term', title); // Use marker title as unique identifier
-    giscusScript.setAttribute('data-strict', '0');
-    giscusScript.setAttribute('data-reactions-enabled', '1');
-    giscusScript.setAttribute('data-emit-metadata', '0');
-    giscusScript.setAttribute('data-input-position', 'bottom');
-    giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
-    giscusScript.setAttribute('data-lang', 'en');
-    giscusScript.setAttribute('crossorigin', 'anonymous');
-    giscusScript.async = true;
-
-    giscusContainer.appendChild(giscusScript);
-
-    modal.style.display = 'flex';
-}
-
-function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.style.display = 'none';
-}
-
-    
 
 
 
@@ -961,4 +919,3 @@ function closeModal() {
     </script>
 </body>
 </html>
-
