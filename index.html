@@ -520,7 +520,7 @@
             z-index: 1100;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(to bottom, #e63946, #f4a261, #2a9d8f, #457b9d, #1d3557);
+            background: linear-gradient(to top, #e63946, #f4a261, #2a9d8f, #457b9d, #1d3557);
         }
 
         .sidebar-section {
@@ -744,7 +744,7 @@
       
         <div class="hero-container">
           <div class="environment"></div>
-          <h1 class="hero glitch layers" data-text="ORBS"><span>ORBS</span></h1>
+          <h1 class="hero glitch layers" data-text="ORBS"><span>O.R.B.S</span></h1>
         </div>
       </section>
 
@@ -759,7 +759,7 @@
 
     <div class="hero-container">
         <div class="welcome-text">
-            <h2 class="herp glitch layers" data-text="Archive of the ">Archive of the </h2>
+            <h2 class="herp glitch layers" data-text="Obscure Radical Bounding Spheres">Obscure Radical Bounding Spheres</h2>
             <p></p>
         </div>
         
@@ -800,6 +800,8 @@
     
     <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLc-jHwfZaLVQ6iscH79Qj6ZwP4BgSVfY&callback=initMap" async defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
    
     <script>
       let map;
@@ -833,14 +835,14 @@
             { section: 4, position: { lat: 46.8827, lng: -55.4 }, title: "Shoal Cove", panorama: "ShoalCove.png" },
             { section: 2, position: { lat: 41.55, lng: -77.97 }, title: "West Branch", panorama: "WestBranch.png" },
             { section: 2, position: { lat: 40.714, lng: -74.0297 }, title: "Paulus Pier", panorama: "PaulusPierNY.png" },
-            { section: 2, position: { lat: 40.371, lng: -105.777 }, title: "Mt. Ida", panorama: "MtIda.png" },
+            { section: 4, position: { lat: 40.371, lng: -105.777 }, title: "Mt. Ida", panorama: "MtIda.png" },
             { section: 2, position: { lat: 38.175, lng: -75.157 }, title: "Assateague", panorama: "Assateague.png" },
             { section: 2, position: { lat: 43.858, lng: -77.09 }, title: "Lake Ontario", panorama: "LakeOntario.png" },
-            { section: 2, position: { lat: 41.605, lng: -82.692 }, title: "Lake Erie", panorama: "LakeErie.png" },
+            { section: 4, position: { lat: 41.605, lng: -82.692 }, title: "Lake Erie", panorama: "LakeErie.png" },
             { section: 2, position: { lat: 39.107, lng: -79.875 }, title: "TeterCreek", panorama: "TeterCreek.png" },
             { section: 2, position: { lat: 64.405, lng: -16.77 }, title: "Vatnajokull", panorama: "Vatnajokull.png" },
             { section: 2, position: { lat: 42.36, lng: -72.318 }, title: "QuabbinReservoir", panorama: "QuabbinReservoir.png" },
-            { section: 2, position: { lat: 39.7, lng: -31.102}, title: "Caldeirao", panorama: "Caldeirao.png" },
+            { section: 4, position: { lat: 39.7, lng: -31.102}, title: "Caldeirao", panorama: "Caldeirao.png" },
             { section: 2, position: { lat: 45.59, lng: -1.16}, title: "Cordouan", panorama: "Cordouan.png" },
             { section: 2, position: { lat: 33.704, lng: -7.41}, title: "Falaise", panorama: "Falaise.png" },
             { section: 2, position: { lat: 51.77, lng: -10.54}, title: "Skellig", panorama: "Skellig.png" },
@@ -855,7 +857,7 @@
             { section: 2, position: { lat: 48, lng: 84.1}, title: "LakeZaysan", panorama: "LakeZaysan.png" },
             { section: 2, position: { lat: 1.24, lng: 103.9}, title: "MarinaSingapore", panorama: "MarinaSingapore.png" },
             { section: 2, position: { lat: 18.96, lng: 72.858}, title: "Mumbai", panorama: "Mumbai.png" },
-            { section: 2, position: { lat: 37.5, lng: 130.87}, title: "Seonginbong", panorama: "Seonginbong.png" },
+            { section: 4, position: { lat: 37.5, lng: 130.87}, title: "Seonginbong", panorama: "Seonginbong.png" },
             { section: 2, position: { lat: 32, lng: 112.165}, title: "Xiangyang", panorama: "Xiangyang.png" },
             { section: 2, position: { lat: 29.35, lng: 110.5}, title: "Zhangjiajie", panorama: "Zhangjiajie.png" },
             { section: 2, position: { lat: 69.5, lng: 88.5}, title: "Talnakh", panorama: "Talnakh.png" },
@@ -910,8 +912,61 @@
 
     window.onload = initMap;
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyDQlS7b9PoSH8bujBV05n16wqcE6O8KXYQ",
+        authDomain: "orbs-cbe82.firebaseapp.com",
+        databaseURL: "https://orbs-cbe82-default-rtdb.firebaseio.com",
+        projectId: "orbs-cbe82",
+        storageBucket: "orbs-cbe82.firebasestorage.app",
+        messagingSenderId: "1074078889471",
+        appId: "1:1074078889471:web:d9b000b223ab6730f363ca",
+        measurementId: "G-BBECYFQ8R7"
+        };
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
+function addComment() {
+    const nameInput = document.getElementById('name-input');
+    const commentInput = document.getElementById('comment-input');
+    const commentsContainer = document.getElementById('comments-container');
+
+    const name = nameInput.value.trim();
+    const comment = commentInput.value.trim();
+
+    if (!name || !comment) {
+        alert('Please enter both your name and a comment.');
+        return;
+    }
+
+    // Create a new comment element
+    const commentElement = document.createElement('div');
+    commentElement.style.marginBottom = '10px';
+    commentElement.style.padding = '5px';
+    commentElement.style.borderBottom = '1px solid #555';
+
+    // Create the name span
+    const nameElement = document.createElement('span');
+    nameElement.style.fontWeight = 'bold';
+    nameElement.style.color = '#1bc7fb';
+    nameElement.textContent = `${name}: `;
+
+    // Create the comment text
+    const commentText = document.createElement('span');
+    commentText.textContent = comment;
+
+    // Append the name and comment to the comment element
+    commentElement.appendChild(nameElement);
+    commentElement.appendChild(commentText);
+
+    // Append the new comment to the container
+    commentsContainer.appendChild(commentElement);
+
+    // Clear the input fields
+    nameInput.value = '';
+    commentInput.value = '';
+}
 
 
 
