@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encyclopaedia of Cryptozoology</title>
+    <title>ORBS</title>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css">
     <style>
         
@@ -777,6 +777,28 @@
             color: #888;
         }
 
+        #comments-list {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+        }
+
+        .comment p {
+            font-size: 0.9em;
+            color: #ddd;
+        }
+
+        .comment strong {
+            color: #e0287d;
+        }
+
         
 
     </style>
@@ -819,31 +841,21 @@
         </div>
     </div>
 
-    <div id="comments-section">
-        <h2>Comments</h2>
-        <form id="comment-form">
-            <textarea id="comment-input" placeholder="Write a comment..." required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-        <div id="comments-list">
-            <!-- Comments will appear here -->
-        </div>
-    </div>
+    
 
 
     <div class="modal" id="viewerModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div id="panorama" style="width: 100%; height: 70%;"></div>
-        <div id="comment-section">
-            <h3>Comments</h3>
-            <div id="comments-container"></div>
-            <input id="name-input" type="text" placeholder="Your Name" />
-            <input id="comment-input" type="text" placeholder="Add a comment..." />
-            <button onclick="addComment()">Post Comment</button>
-        </div>
+        <div id="panorama" style="width: 100%; height: 100%;"></div>
+        
+        
     </div>
 </div>
+
+
+
+
     
     
 
@@ -863,33 +875,12 @@
         </div>
     </div>
 
+
+
     
     <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLc-jHwfZaLVQ6iscH79Qj6ZwP4BgSVfY&callback=initMap" async defer></script>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyDpVztryQUBX1iMdXNoyftl3HNlyClkVzM",
-          authDomain: "orbs-f6347.firebaseapp.com",
-          projectId: "orbs-f6347",
-          storageBucket: "orbs-f6347.firebasestorage.app",
-          messagingSenderId: "265696355052",
-          appId: "1:265696355052:web:a0221bc0b5e6e7e9207bc9",
-          measurementId: "G-YH53ZNTDJC"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
-    
+       
    
     <script>
          
@@ -1007,42 +998,11 @@
 
     window.onload = initMap;
 
-    
+   
 
     
 
-        // Elements
-        const commentForm = document.getElementById('comment-form');
-        const commentInput = document.getElementById('comment-input');
-        const commentsList = document.getElementById('comments-list');
-
-        // Submit comment
-        commentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const comment = commentInput.value.trim();
-            if (comment) {
-                const commentId = Date.now().toString();
-                firebase.database().ref('comments/' + commentId).set({
-                    id: commentId,
-                    text: comment,
-                    timestamp: new Date().toISOString()
-                });
-                commentInput.value = '';
-            }
-        });
-
-        // Display comments
-        firebase.database().ref('comments').on('value', (snapshot) => {
-            commentsList.innerHTML = '';
-            const comments = snapshot.val();
-            if (comments) {
-                Object.values(comments).forEach((comment) => {
-                    const commentDiv = document.createElement('div');
-                    commentDiv.textContent = comment.text;
-                    commentsList.appendChild(commentDiv);
-                });
-            }
-        });
+    
         
 
 
