@@ -547,15 +547,45 @@
         }
 
         .sidebar-image {
-            width: 80px; /* Adjust size as needed */
+            width: 80px;
             height: auto;
             display: block;
-            margin: 0 auto; /* Center image within the section */
-            transition: transform 0.3s, opacity 0.3s; /* Add hover effects */
+            margin: 0 auto;
+            position: relative;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .sidebar-image::before,
+        .sidebar-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: inherit;
+            filter: blur(3px);
+            opacity: 0.5;
+            mix-blend-mode: screen;
+        }
+
+        .sidebar-image::before {
+            transform: translate(-5px, -5px);
+            background-color: #e0287d;
+        }
+
+        .sidebar-image::after {
+            transform: translate(5px, 5px);
+            background-color: #1bc7fb;
+        }
+
+        .sidebar-image:hover {
+            animation: movement 8s step-end infinite, opacity 5s step-end infinite;
         }
 
         .sidebar-section:hover .sidebar-image {
-            transform: scale(1.1); /* Slight zoom on hover */
+            transform: scale(1.1);
             opacity: 0.8;
         }
 
@@ -758,17 +788,25 @@
       </section>
 
       <div class="sidebar">
-        <div class="sidebar-section" onclick="showMarkers(1)">
-            <img src="ICON.png" alt="All" class="sidebar-image">
+        <div class="sidebar-section">
+            <a href="#section1">
+                <img src="icon.png" alt="Icon 1" class="sidebar-image">
+            </a>
         </div>
-        <div class="sidebar-section" onclick="showMarkers(2)">
-            <img src="ICON2.png" alt="Distant" class="sidebar-image">
+        <div class="sidebar-section">
+            <a href="#section2">
+                <img src="icon2.png" alt="Icon 2" class="sidebar-image">
+            </a>
         </div>
-        <div class="sidebar-section" onclick="showMarkers(3)">
-            <img src="ICON3.png" alt="Close Proximity" class="sidebar-image">
+        <div class="sidebar-section">
+            <a href="#section3">
+                <img src="icon3.png" alt="Icon 3" class="sidebar-image">
+            </a>
         </div>
-        <div class="sidebar-section" onclick="showMarkers(4)">
-            <img src="ICON4.png" alt="Direct" class="sidebar-image">
+        <div class="sidebar-section">
+            <a href="#section1">
+                <img src="icon4.png" alt="Icon 4" class="sidebar-image">
+            </a>
         </div>
     </div>
 
