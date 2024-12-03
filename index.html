@@ -634,7 +634,7 @@
         }
         /* Footer */
         footer {
-            background-color: #f8f8f8;
+            background-color: #18181e;
             border-top: 1px solid #ddd;
             text-align: center;
             padding: 10px;
@@ -645,10 +645,15 @@
             right: 0;
         }
         footer a {
-            color: #0078d7;
+            color: #ffffff;
             text-decoration: none;
             margin: 0 10px;
         }
+
+        footer a:hover {
+            filter: brightness(1.2); /* Slight hover effect */
+        }
+        
         /* Modal for 360 viewer */
         .modal {
             display: none;
@@ -802,7 +807,7 @@
         </div>
     </div>
 
-
+    
     <div class="hero-container">
         <div class="welcome-text">
             <h2 class="herp glitch layers" data-text="Obscure Radical Bounding Spheres">Obscure Radical Bounding Spheres</h2>
@@ -811,6 +816,17 @@
         
         <div class="map-container">
             <div id="map"></div>
+        </div>
+    </div>
+
+    <div id="comments-section">
+        <h2>Comments</h2>
+        <form id="comment-form">
+            <textarea id="comment-input" placeholder="Write a comment..." required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="comments-list">
+            <!-- Comments will appear here -->
         </div>
     </div>
 
@@ -832,7 +848,11 @@
     
 
     <footer>
-        &copy; 2024  | <a href="">Privacy Policy</a> | <a href="\">Terms of Service</a>
+        <div class="hero-container">
+            <a href="page1.html" class="glitch layers" data-text="About">| About |</a>
+            <a href="page2.html" class="glitch layers" data-text="Q/A"> | Q/A | </a>
+            
+        </div>
     </footer>
 
     <!-- 360 Image Viewer -->
@@ -846,10 +866,34 @@
     
     <script src="https://cdn.pannellum.org/2.5/pannellum.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLc-jHwfZaLVQ6iscH79Qj6ZwP4BgSVfY&callback=initMap" async defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDpVztryQUBX1iMdXNoyftl3HNlyClkVzM",
+          authDomain: "orbs-f6347.firebaseapp.com",
+          projectId: "orbs-f6347",
+          storageBucket: "orbs-f6347.firebasestorage.app",
+          messagingSenderId: "265696355052",
+          appId: "1:265696355052:web:a0221bc0b5e6e7e9207bc9",
+          measurementId: "G-YH53ZNTDJC"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+    
    
     <script>
+         
+
       let map;
     let markers = [];
     let groupedMarkers = {
@@ -963,57 +1007,43 @@
 
     window.onload = initMap;
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDQlS7b9PoSH8bujBV05n16wqcE6O8KXYQ",
-        authDomain: "orbs-cbe82.firebaseapp.com",
-        databaseURL: "https://orbs-cbe82-default-rtdb.firebaseio.com",
-        projectId: "orbs-cbe82",
-        storageBucket: "orbs-cbe82.firebasestorage.app",
-        messagingSenderId: "1074078889471",
-        appId: "1:1074078889471:web:d9b000b223ab6730f363ca",
-        measurementId: "G-BBECYFQ8R7"
-        };
+    
 
-// Initialize Firebase
- const app = firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
+    
 
-  // Add a comment to Firebase
-  function addComment() {
-    const name = document.getElementById("name-input").value.trim();
-    const comment = document.getElementById("comment-input").value.trim();
+        // Elements
+        const commentForm = document.getElementById('comment-form');
+        const commentInput = document.getElementById('comment-input');
+        const commentsList = document.getElementById('comments-list');
 
-    if (name && comment) {
-      const commentRef = database.ref("comments").push();
-      commentRef.set({
-        name: name,
-        comment: comment,
-        timestamp: Date.now()
-      });
+        // Submit comment
+        commentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const comment = commentInput.value.trim();
+            if (comment) {
+                const commentId = Date.now().toString();
+                firebase.database().ref('comments/' + commentId).set({
+                    id: commentId,
+                    text: comment,
+                    timestamp: new Date().toISOString()
+                });
+                commentInput.value = '';
+            }
+        });
 
-      // Clear input fields
-      document.getElementById("name-input").value = "";
-      document.getElementById("comment-input").value = "";
-    }
-  }
-
-  // Listen for new comments and display them
-  function loadComments() {
-    const commentsContainer = document.getElementById("comments-container");
-    const commentsRef = database.ref("comments");
-
-    commentsRef.on("child_added", (snapshot) => {
-      const commentData = snapshot.val();
-      const commentElement = document.createElement("div");
-      commentElement.style.marginBottom = "10px";
-      commentElement.innerHTML = `<strong>${commentData.name}:</strong> ${commentData.comment}`;
-      commentsContainer.appendChild(commentElement);
-    });
-  }
-
-  // Load comments on page load
-  document.addEventListener("DOMContentLoaded", loadComments);
-
+        // Display comments
+        firebase.database().ref('comments').on('value', (snapshot) => {
+            commentsList.innerHTML = '';
+            const comments = snapshot.val();
+            if (comments) {
+                Object.values(comments).forEach((comment) => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.textContent = comment.text;
+                    commentsList.appendChild(commentDiv);
+                });
+            }
+        });
+        
 
 
 
