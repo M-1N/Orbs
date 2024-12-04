@@ -597,16 +597,39 @@
         }
 
         .about-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 60px;
             border: 1px solid #333;
             background: rgba(255, 255, 255, 0.1);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
+            text-align: left;
             margin-top: 50px;
-            position: flex; 
-            z-index: 10;
             margin-left: 50px;
         }
+
+        .about-content {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 40px; 
+        }
+
+
+
+        .about-section ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            list-style-type: disc; /* Use 'circle', 'square', or 'none' for different styles */
+            color: #ffffff; /* Matches the text color */
+        }
+
+        .about-section li {
+            margin: 5px 0;
+            font-size: 20px; /* Adjust size as needed */
+        }
+      
 
         
         .floating-images {
@@ -658,6 +681,8 @@
         <img src="orb.png" style="top: 80%; left: 80%;" />
         <img src="orb.png" style="top: 20%; left: 70%;" />
         <img src="orb.png" style="top: 80%; left: 40%;" />
+        <img src="orb.png" style="top: 100%; left: 20%;" />
+        <img src="orb.png" style="top: 110%; left: 60%;" />
     </div>
 
     <div class="sidebar">
@@ -683,11 +708,19 @@
         </section>
        
         <b class="about-section">
-                <h1 class="glitch layers" data-text="Bruh O.R.B.S"><span>What are O.R.B.S</span></h1><br>
-                  
-            <p>O.R.B.S., or Obscure Radical Bounding Spheres, in which they have come to be known, is a phenomenon that has baffled researchers and enthusiasts alike. It refers to a series of unidentified objects that usually gather in groups of 3 that have been recorded around the world, appearing as blue spherical or orb-like entities that defy conventional scientific explanation. While, single instances of this phenomenon may seem peculiar, the sheer amount of these mysterious occurrences that have been captured on numerous panoramic images around the world prove otherwise.</p><br>
-            <p></p>
-        </div>
+            <h1 class="glitch layers" data-text="Bruh O.R.B.S"><span>What are O.R.B.S</span></h1>
+            <br>
+            <h3>O.R.B.S., or Obscure Radical Bounding Spheres, in which they have come to be known, is a phenomenon that has baffled researchers and enthusiasts alike. It refers to a series of unidentified objects that usually gather in groups of 3 that have been recorded around the world, appearing as blue spherical or orb-like entities that defy conventional scientific explanation. While, single instances of this phenomenon may seem peculiar, the sheer amount of these mysterious occurrences that have been captured on numerous panoramic images around the world prove otherwise.</h3><br>
+            <h3>Although many of these unidentified objects are unknown in their origin, composition, and purpose, many have theorized that these spheres are a form of extraterrestrial or interdimensional presence, while others believe they may be the result of natural atmospheric phenomena that science has yet to fully understand. Based on the images gathered that resemble the same or similar objects, the O.R.B.S are frequently observed hovering or floating in the sky, often over remote or rural areas—though sightings are not exclusive to these regions. Interestingly, most reported cases have been concentrated in the Northeastern Americas, though sightings elsewhere are not uncommon. The proximity of these encounters varies significantly; some are unbelievably close, while others are barely visible and can be dismissed easily. Notably, the quality of the images captured seems to correlate with proximity, possibly due to electromagnetic interference emitted by the O.R.B.S. themselves, further deepening the enigma surrounding them.</h3><br>
+            <h3> Based on the unusual amount of occurrences of these phenomena, the site was created to document these objects and initiate conversation. When on the home page, the site is structured so that the sightings are categorized by the proximity of the sightings. The icons below depict the same ones on the sidebar portrayed in the home page. Below, the icons displayed correspond directly to those featured on the sidebar of the homepage. From top to bottom, each icon symbolizes the following:</h3><br>
+            
+            <ul>
+                <li><img src="ICON.png" alt="All"> - All: Shows all markers of sightings</li>
+                <li><img src="ICON2.png" alt="Distant Proximity"> - DISTANT: Shows all sightings that are seen from afar</li>
+                <li><img src="ICON3.png" alt="Close Proximity"> - CLOSE: Shows all sightings that can clearly see the phenomena</li>
+                <li><img src="ICON4.png" alt="Direct Encounter"> - DIRECT: Shows all sightings that depicts direct interaction with phenomena </li>
+            </ul>
+        </b>
     </div>
 
 
